@@ -2,7 +2,7 @@
 
 :root {
   --container-height: 600px;
-  --contaier-width: 400px;
+  --contaier-width: 550px;
   --header-height: 150px;
 }
 
@@ -14,6 +14,8 @@
 }
 html {
   font-size: 20px;
+  background-color: rgb(65, 101, 143);
+  background: linear-gradient(to right, rgb(12, 18, 46), rgb(63, 82, 167), rgb(22, 31, 78) )
 }
 
 body {
@@ -28,7 +30,7 @@ body {
   background-color: rgb(143, 186, 236);
   width: var(--contaier-width);
   height: var(--container-height);
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 10px 10px;
 
   position: relative;
   overflow: hidden;
@@ -124,11 +126,11 @@ header {
   text-decoration: line-through;
   color: grey;
 }
-#todos-list .todo .bi-pencil-square {
-  color: rgb(31, 177, 48);
+#todos-list .todo .bi-pen-fill {
+  color: rgba(0, 0, 0, 0.8);
 }
-#todos-list .todo .bi-trash {
-  color: rgb(236, 82, 82);
+#todos-list .todo .bi-trash3-fill {
+  color: rgba(0, 0, 0, 0.8);
   margin: 0;
 }
 
