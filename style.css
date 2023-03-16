@@ -122,10 +122,6 @@ header {
   flex: 1;
   word-break: break-all;
 }
-.checked {
-  text-decoration: line-through;
-  color: grey;
-}
 #todos-list .todo .bi-pen-fill {
   color: rgba(0, 0, 0, 0.8);
 }
