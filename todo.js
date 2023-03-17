@@ -113,3 +113,17 @@ function showNotification(msg){
         notificationElement.classList.remove("notif-enter")
     }, 4500)
 }
+
+function sendNotification(){
+    toDos.forEach((toDo, index) => {
+        Notification.requestPermission().then(perm =>{
+            if(perm === "granted"){
+                new Notification(toDo.value)
+            }
+        })
+    });
+}
+
+setInterval(function(){
+    sendNotification();
+},600000)
