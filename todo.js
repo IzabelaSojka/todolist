@@ -2,28 +2,44 @@ const form = document.getElementById("todoform");
 const toDoInput = document.getElementById("new");
 const toDoList = document.getElementById("todos-list");
 const notificationElement = document.querySelector(".notification");
+const addModal = document.getElementById("addModal");
+const addBtn = document.getElementById("add-btn");
+const closeBtn = document.getElementById("close-btn");
+
 
 let toDos = JSON.parse(localStorage.getItem("toDos")) || [];
 let editToDoId = -1;
 
 renderToDo();
 
+addBtn.onclick = function() {
+    addModal.style.display = "block";
+}
+
+closeBtn.onclick = function() {
+    addModal.style.display = "none";
+}
+
+function close() {
+    document.getElementById("addModal").style.display = "none";
+}
+
 form.addEventListener('submit', function(event){
     event.preventDefault();
     saveToDo();
     renderToDo();
     localStorage.setItem("toDos", JSON.stringify(toDos));
+    close();
 });
 
 function saveToDo(){
-    const toDoValue = toDoInput.value;
-    const isEmpty = toDoValue === '';
-    const isDuplicate = toDos.some((toDo) => toDo.value.toUpperCase() === toDoValue.toUpperCase());
+    const name = document.getElementById("name").value;
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
 
-    if(isEmpty){
-        showNotification("Your list is empty!");
-    }
-    else if(isDuplicate){
+    const obj = {name: name, date: date, time: time, checked: false};
+
+    if(ifDuplicate(name)){
         showNotification("Already exist!");
     }
     else{
@@ -35,13 +51,25 @@ function saveToDo(){
             editToDoId = -1;
         }
         else{
-            toDos.push({
-            value : toDoValue,
-            checked : false
-            });
+            toDos.push(obj);
+            console.log(obj);
         }
-         toDos.value = '';
     }
+}
+
+function ifDuplicate(name){
+    const jsonData = localStorage.getItem("toDos");
+    if(!jsonData){
+        return false;
+    }
+    else{
+        for(var i = 0; i < toDos.length; i++){
+            if( toDos[i].name.toUpperCase() === name.toUpperCase() ){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function renderToDo(){
@@ -57,7 +85,7 @@ function renderToDo(){
                     class="bi ${toDo.checked ? 'bi-check-square' : 'bi-square'}"
                     data-action="check"
                 ></i>
-                <p class="">${toDo.value}</p>
+                <p class="">${toDo.name}</p>
                 <i class="bi bi-pen-fill" data-action="edit"></i>
                 <i class="bi bi-trash3-fill" data-action="delete"></i>
             </div>

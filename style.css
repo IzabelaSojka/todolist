@@ -31,7 +31,6 @@ body {
   width: var(--contaier-width);
   height: var(--container-height);
   border-radius: 10px 10px 10px 10px;
-
   position: relative;
   overflow: hidden;
 }
@@ -59,40 +58,25 @@ header {
   height: 50px;
   background-color: rgb(186, 210, 238);
 }
-.add-todo {
-  width: 100%;
-  height: 50px;
-  padding: 0.25rem 0;
-}
-.add-todo form {
-  display: flex;
-  align-items: center;
-}
-.add-todo form input {
-  flex: 1;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  border-right: 0px;
-  outline: transparent;
-  padding-left: 0.5rem;
-  font-size: 1rem;
-  color: rgb(11, 7, 68);
-}
-.add-todo form button {
-  width: 60px;
-  height: 40px;
-  font-size: 1rem;
-  background-color: transparent;
-  color: rgb(11, 7, 68);
-  border: none;
-  border-left: 0px;
+.under-header button {
+  width: 100px;
+  padding: 10px 15px;
+  margin-left: 10px;
+  margin-top: 5px;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  background-color: rgb(10, 19, 94);
+  color: #fff;
   cursor: pointer;
+  transition: transform 0.3s;
 }
-.add-todo form button:hover {
-  text-shadow: 1px 1px 20px rgba(0, 0, 0, 0.8);
+.under-header button:hover{
+  transform: translateY(-2px);
 }
-
+.under-header button:active{
+  transform: translateY(0);
+}
 #todos-list {
   height: calc(var(--container-height) - var(--header-height));
   background-color: #fff;
@@ -101,7 +85,6 @@ header {
   overflow: scroll;
   border-radius: 0 0 5px 5px;
 }
-
 #todos-list .todo {
   display: flex;
   align-items: center;
@@ -129,29 +112,82 @@ header {
   color: rgba(0, 0, 0, 0.8);
   margin: 0;
 }
-
 .notification {
   position: absolute;
-
   width: calc(3 * var(--contaier-width) / 4);
   height: 60px;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   opacity: 0.9;
-
   border-radius: 8px;
   background-color: rgb(233, 81, 81);
   top: 10px;
   right: calc(-3 * var(--contaier-width) / 4);
-
   color: #fff;
-
   transition: 300ms right ease-in-out;
 }
-
 .notif-enter {
   right: 10px;
+}
+.modal {
+  width: 500px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  background-image: url('./background.png');
+  color: #fff;
+  display: none;
+}
+
+.x-btn {
+  position: absolute;
+  right: 20px;
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  background: transparent;
+}
+.form-header {
+  height: 85px;
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+  margin-top: 50px;
+  font-weight: bold;
+}
+.modal form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.modal form input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 300px;
+  height: 40px;
+  border: none;
+  border-right: 0px;
+  border-radius: 10px;
+  flex: 1;
+  outline: none;
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  color: rgb(11, 7, 68);
+}
+.modal button {
+  position: absolute;
+  top: 82%;
+  right: 25px;
+  font-size: 2rem;
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+}
+.modal button:hover {
+  text-shadow: 5px 5px 20px rgba(243, 236, 236, 0.8);
 }
