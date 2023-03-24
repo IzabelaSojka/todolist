@@ -86,12 +86,21 @@ function renderToDo(){
                     data-action="check"
                 ></i>
                 <p class="">${toDo.name}</p>
+                <div id="popover" class="popover">
+                    <div class="popover-content">
+                    ${toDo.time}<br>${toDo.date}</div>
+                </div>
+                <i class="bi bi-clock-fill" data-action="detail"></i>
                 <i class="bi bi-pen-fill" data-action="edit"></i>
                 <i class="bi bi-trash3-fill" data-action="delete"></i>
             </div>
         `;  
     });
 }
+
+popover.addEventListener("click", function() {
+    popover.style.display = "none";
+  });
 
 toDoList.addEventListener('click', (event) => {
     const target = event.target;
@@ -107,6 +116,7 @@ toDoList.addEventListener('click', (event) => {
     action === "check" && checkToDo(toDoId);
     action === "edit" && editToDo(toDoId);
     action === "delete" && deleteToDo(toDoId);
+    action === "detail" && detail();
 });
 
 function checkToDo(toDoId){
@@ -132,6 +142,15 @@ function deleteToDo(toDoId){
     localStorage.setItem("toDos", JSON.stringify(toDos));
 }
 
+function detail() {
+    const popover = document.getElementById("popover");
+    if (popover.style.display === "none") {
+        popover.style.display = "block";
+      } else {
+        popover.style.display = "none";
+      }
+}
+
 function showNotification(msg){
     notificationElement.innerHTML = msg;
 
@@ -143,15 +162,18 @@ function showNotification(msg){
 }
 
 function sendNotification(){
+    const currentDate = new Date();
     toDos.forEach((toDo, index) => {
-        Notification.requestPermission().then(perm =>{
-            if(perm === "granted"){
-                new Notification(toDo.value)
-            }
-        })
+        if(toDo.date === currentDate.toISOString().substr(0, 10) && toDo.time === currentDate.toTimeString().substr(0, 5)){
+            Notification.requestPermission().then(perm => {
+                if(perm === "granted"){
+                    new Notification(toDo.name)
+                }
+            })
+        }
     });
 }
 
 setInterval(function(){
     sendNotification();
-},600000)
+},60 * 1000)

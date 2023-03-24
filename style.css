@@ -112,6 +112,22 @@ header {
   color: rgba(0, 0, 0, 0.8);
   margin: 0;
 }
+#todos-list .todo .bi-clock-fill {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+#todos-list .todo .popover {
+  display: none;
+  background-color: rgb(10, 19, 94);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(20, 20, 20, 0.3);
+}
+#todos-list .todo .popover-content {
+  font-size: 16px;
+  color: #fff;
+}
 .notification {
   position: absolute;
   width: calc(3 * var(--contaier-width) / 4);
@@ -142,7 +158,6 @@ header {
   color: #fff;
   display: none;
 }
-
 .x-btn {
   position: absolute;
   right: 20px;
