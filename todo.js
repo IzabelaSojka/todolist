@@ -1,11 +1,12 @@
 const form = document.getElementById("todoform");
-const toDoInput = document.getElementById("new");
 const toDoList = document.getElementById("todos-list");
 const notificationElement = document.querySelector(".notification");
 const addModal = document.getElementById("addModal");
 const addBtn = document.getElementById("add-btn");
 const closeBtn = document.getElementById("close-btn");
-
+const name = document.getElementById("name");
+const date = document.getElementById("date");
+const time = document.getElementById("time");
 
 let toDos = JSON.parse(localStorage.getItem("toDos")) || [];
 let editToDoId = -1;
@@ -18,6 +19,7 @@ addBtn.onclick = function() {
 
 closeBtn.onclick = function() {
     addModal.style.display = "none";
+    cleanForm();
 }
 
 function close() {
@@ -30,29 +32,31 @@ form.addEventListener('submit', function(event){
     renderToDo();
     localStorage.setItem("toDos", JSON.stringify(toDos));
     close();
+    cleanForm();
 });
 
 function saveToDo(){
-    const name = document.getElementById("name").value;
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
+    const nameValue = name.value;
+    const dateValue = date.value;
+    const timeValue = time.value;
 
-    const obj = {name: name, date: date, time: time, checked: false};
+    const obj = {name: nameValue, date: dateValue, time: timeValue, checked: false};
 
-    if(ifDuplicate(name)){
+    if(ifDuplicate(nameValue) && editToDoId < 0){
         showNotification("Already exist!");
     }
     else{
         if(editToDoId >= 0){
             toDos = toDos.map((toDo, index) =>({
                 ...toDo,
-                value: index === editToDoId ? toDoValue : toDo.value,
+                name: index === editToDoId ? nameValue : toDo.name,
+                date: index === editToDoId ? dateValue : toDo.date,
+                time: index === editToDoId ? timeValue : toDo.time,
             }));
             editToDoId = -1;
         }
         else{
             toDos.push(obj);
-            console.log(obj);
         }
     }
 }
@@ -86,7 +90,7 @@ function renderToDo(){
                     data-action="check"
                 ></i>
                 <p class="">${toDo.name}</p>
-                <div id="popover" class="popover">
+                <div id="popover-${index}" class="popover">
                     <div class="popover-content">
                     ${toDo.time}<br>${toDo.date}</div>
                 </div>
@@ -97,10 +101,6 @@ function renderToDo(){
         `;  
     });
 }
-
-popover.addEventListener("click", function() {
-    popover.style.display = "none";
-  });
 
 toDoList.addEventListener('click', (event) => {
     const target = event.target;
@@ -116,7 +116,7 @@ toDoList.addEventListener('click', (event) => {
     action === "check" && checkToDo(toDoId);
     action === "edit" && editToDo(toDoId);
     action === "delete" && deleteToDo(toDoId);
-    action === "detail" && detail();
+    action === "detail" && detail(toDoId);
 });
 
 function checkToDo(toDoId){
@@ -130,8 +130,17 @@ function checkToDo(toDoId){
 }
 
 function editToDo(toDoId){
-    toDoInput.value = toDos[toDoId].value;
     editToDoId = toDoId;
+    name.value = toDos[toDoId].name;
+    date.value = toDos[toDoId].date;
+    time.value = toDos[toDoId].time;
+    addModal.style.display = "block";
+}
+
+function cleanForm() {
+    name.value = " ";
+    date.value = " ";
+    time.value = " ";
 }
 
 function deleteToDo(toDoId){
@@ -142,8 +151,9 @@ function deleteToDo(toDoId){
     localStorage.setItem("toDos", JSON.stringify(toDos));
 }
 
-function detail() {
-    const popover = document.getElementById("popover");
+function detail(toDoId) {
+    const popoverId = "popover-" + toDoId;
+    const popover = document.getElementById(popoverId);
     if (popover.style.display === "none") {
         popover.style.display = "block";
       } else {

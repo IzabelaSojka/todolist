@@ -5,7 +5,6 @@
   --contaier-width: 550px;
   --header-height: 150px;
 }
-
 * {
   padding: 0;
   margin: 0;
@@ -115,7 +114,6 @@ header {
 #todos-list .todo .bi-clock-fill {
   color: rgba(0, 0, 0, 0.8);
 }
-
 #todos-list .todo .popover {
   display: none;
   background-color: rgb(10, 19, 94);
